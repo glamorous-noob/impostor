@@ -12,7 +12,8 @@ let addImpostor = () =>{
     let URL = URLpatternTag.value;
     let path = impostorTag.value;
     if(!(isURLvalid(URL) && isPathValid(path))) return;
-    bg.addTarget(URL, path);
+    await bg.addTarget(URL, path);
+    refreshData();
 }
 
 var refreshData = async () => {

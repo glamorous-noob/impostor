@@ -3,15 +3,13 @@ var dumpCache = "";
 
 const monitoredTabsIds = new Set();
 
-var getDefinedTargets = async () => browser.storage.local.get(null)
+var getDefinedTargets = async () => browser.storage.local.get(null);
 
-var getNumberOfTargets = async () => {
-	let targets = await getDefinedTargets();
-	return Object.keys(targets).length;
-}
+var getDefinedURLs = async () => Object.keys(await getDefinedTargets());
+
+var getNumberOfTargets = async () => (await getDefinedURLs()).length;
 
 var addTarget = async (URL, localPath) => {
-	currentTargets = await getDefinedTargets();
 	keyvalue={};
 	keyvalue[URL]=localPath;
 	await browser.storage.local.set(keyvalue);
@@ -29,7 +27,8 @@ let monitorCallback = async details => {
 var monitorTab = tabId => {
 	addMonitoredTab(tabId);
 	if(!browser.webRequest.onBeforeRequest.hasListener(monitorCallback)){
-		let requestFilter = {'urls': ['<all_urls>']};
+		let definedURLs = await getDefinedURLs();
+		let requestFilter = {'urls': definedURLs};
 		browser.webRequest.onBeforeRequest.addListener(monitorCallback, requestFilter);
 	}
 	text = 'registered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
