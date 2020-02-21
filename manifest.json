@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "Impostor",
+  "description": "This extension is just my playground for now",
+  "version": "0.0",
+  "browser_action": {
+   "default_title": "Whats abouts",
+   "default_popup": "popups/default_popup.html"
+  },
+  "background": {
+	"scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "permissions": [
+  "tabs",
+  "activeTab",
+  "webRequest",
+  "webRequestBlocking",
+  "storage",
+  "<all_urls>"
+  ],
+  "applications" : {
+    "gecko": {
+      "id" : "impostor@glamorous_noob"
+    }
+  }
+}
