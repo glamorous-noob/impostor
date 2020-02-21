@@ -1,14 +1,14 @@
 let targetCountSpan;
 let URLpatternTag;
 let impostorTag;
-let addImpostorButton;
+let addTargetButton;
 let bg;
 
 // TODO
 let isURLvalid = (URL) => true;
 let isPathValid = (URL) => true;
 
-let addImpostor = () =>{
+let addTarget = async () =>{
     let URL = URLpatternTag.value;
     let path = impostorTag.value;
     if(!(isURLvalid(URL) && isPathValid(path))) return;
@@ -26,10 +26,10 @@ let init = async () => {
     targetCountSpan = document.getElementById("targetCount");
     URLpatternTag = document.getElementById("URLpattern");
     impostorTag = document.getElementById("ImpostorPath");
-    addImpostorButton = document.getElementById("addImpostor");
+    addTargetButton = document.getElementById("addTarget");
     
     
-    addImpostorButton.addEventListener("click", addImpostor);
+    addTargetButton.addEventListener("click", addTarget);
 
     refreshData();
 }
