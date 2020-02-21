@@ -24,7 +24,7 @@ let monitorCallback = async details => {
 	return {};
 }
 
-var monitorTab = tabId => {
+var monitorTab = async tabId => {
 	addMonitoredTab(tabId);
 	if(!browser.webRequest.onBeforeRequest.hasListener(monitorCallback)){
 		let definedURLs = await getDefinedURLs();
