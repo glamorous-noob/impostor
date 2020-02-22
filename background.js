@@ -8,9 +8,10 @@ let definedTargetsObj = {};
 let definedTargetsInitialized = false;
 const monitoredTabsIds = new Set();
 
+let isListeningToRequests = () => browser.webRequest.onBeforeRequest.hasListener(monitorCallback);
 
 let listenToRequests = async () => {
-	if(!browser.webRequest.onBeforeRequest.hasListener(monitorCallback)){
+	if(!isListeningToRequests()){
 		let definedURLs = await getDefinedURLs();
 		let requestFilter = {'urls': definedURLs};
 		browser.webRequest.onBeforeRequest.addListener(monitorCallback, requestFilter);
