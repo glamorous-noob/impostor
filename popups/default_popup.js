@@ -1,4 +1,4 @@
-
+'use strict';
 let currentTabQuery = { active: true, currentWindow: true};
 let currentTab;
 let settingsButton;

@@ -1,3 +1,4 @@
+'use strict';
 let targetCountSpan;
 let URLpatternTag;
 let impostorTag;
