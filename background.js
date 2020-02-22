@@ -18,7 +18,7 @@ let listenToRequests = async () => {
 	}
 }
 
-let stopListeningToRequests = async () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+let stopListeningToRequests = () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
 
 let initializeDefinedTargets = async () => {
 	let storedTargets = await browser.storage.local.get(definedTargetsKey);
