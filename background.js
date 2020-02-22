@@ -2,10 +2,24 @@
 var usePopupDump;
 var updateActionButtonState = undefined;
 var dumpCache = "";
-
+let definedTargetsKey = "DEFINED_TARGETS"
+let definedTargetsObj = {};
+let definedTargetsInitialized = false;
 const monitoredTabsIds = new Set();
 
-var getDefinedTargets = async () => browser.storage.local.get(null);
+let initializeDefinedTargets = async () => {
+	let storedTargets = await browser.storage.local.get(definedTargetsKey);
+	if(definedTargetsKey in storedTargets)
+		definedTargetsObj = JSON.parse(storedTargets[definedTargetsKey]);
+	else
+		storeDefinedTargets();
+	definedTargetsInitialized = true;
+}
+
+var getDefinedTargets = async () => {
+	if(!definedTargetsInitialized) await initializeDefinedTargets();
+	return definedTargetsObj;
+}
 
 var getDefinedURLs = async () => Object.keys(await getDefinedTargets());
 
@@ -13,10 +27,17 @@ var getNumberOfTargets = async () => (await getDefinedURLs()).length;
 
 var definedTargetsExist = async () => (await getDefinedURLs()).length != 0;
 
+let storeDefinedTargets = async () => {
+	let storageObj = {};
+	storageObj[definedTargetsKey]=JSON.stringify(definedTargetsObj);
+	browser.storage.local.set(storageObj);
+}
+
 var addTarget = async (URL, localPath) => {
-	keyvalue={};
-	keyvalue[URL]=localPath;
-	await browser.storage.local.set(keyvalue);
+	definedTargetsObj[URL] = localPath;
+	storeDefinedTargets();
+}
+
 }
 
 let monitorCallback = async details => {
