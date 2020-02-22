@@ -1,6 +1,7 @@
 'use strict';
 var usePopupDump;
 var updateActionButtonState = undefined;
+var refreshOptionsPageData = undefined;
 var dumpCache = "";
 let definedTargetsKey = "DEFINED_TARGETS"
 let definedTargetsObj = {};
@@ -38,6 +39,11 @@ var addTarget = async (URL, localPath) => {
 	storeDefinedTargets();
 }
 
+let definedTargetsChanged = (changes, areaName) => {
+	if (areaName == "local" && (definedTargetsKey in changes)){
+		if (updateActionButtonState!=undefined) updateActionButtonState();
+		if (refreshOptionsPageData!=undefined) refreshOptionsPageData();
+	}
 }
 
 let monitorCallback = async details => {
@@ -83,3 +89,4 @@ let tabRemoved = (tabId, removeInfo) => {
 
 
 browser.tabs.onRemoved.addListener(tabRemoved);
+browser.storage.onChanged.addListener(definedTargetsChanged);

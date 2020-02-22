@@ -15,7 +15,6 @@ let addTarget = async () =>{
     let path = impostorTag.value;
     if(!(isURLvalid(URL) && isPathValid(path))) return;
     await bg.addTarget(URL, path);
-    refreshData();
 }
 
 var refreshData = async () => {
@@ -36,14 +35,14 @@ var refreshData = async () => {
 }
 
 let init = async () => {
-    bg = await browser.runtime.getBackgroundPage();
-    
     targetCountSpan = document.getElementById("targetCount");
     URLpatternTag = document.getElementById("URLpattern");
     impostorTag = document.getElementById("ImpostorPath");
     addTargetButton = document.getElementById("addTarget");
     targetsTableBody = document.getElementById("TargetsTable").getElementsByTagName("tbody")[0];
     
+    bg = await browser.runtime.getBackgroundPage();
+    bg.refreshOptionsPageData = refreshData;
     
     addTargetButton.addEventListener("click", addTarget);
 
