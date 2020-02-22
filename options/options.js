@@ -3,6 +3,7 @@ let targetCountSpan;
 let URLpatternTag;
 let impostorTag;
 let addTargetButton;
+let clearTargetsButton;
 let targetsTableBody;
 let bg;
 
@@ -16,6 +17,8 @@ let addTarget = async () =>{
     if(!(isURLvalid(URL) && isPathValid(path))) return;
     await bg.addTarget(URL, path);
 }
+
+let clearTargets = async () => bg.clearTargets();
 
 var refreshData = async () => {
     targetCountSpan.textContent = await bg.getNumberOfTargets();
@@ -39,12 +42,14 @@ let init = async () => {
     URLpatternTag = document.getElementById("URLpattern");
     impostorTag = document.getElementById("ImpostorPath");
     addTargetButton = document.getElementById("addTarget");
+    clearTargetsButton = document.getElementById("clearTargets");
     targetsTableBody = document.getElementById("TargetsTable").getElementsByTagName("tbody")[0];
     
     bg = await browser.runtime.getBackgroundPage();
     bg.refreshOptionsPageData = refreshData;
 
     addTargetButton.addEventListener("click", addTarget);
+    clearTargetsButton.addEventListener('click', clearTargets);
 
     refreshData();
 }

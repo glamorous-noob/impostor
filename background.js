@@ -39,6 +39,12 @@ var addTarget = async (URL, localPath) => {
 	storeDefinedTargets();
 }
 
+var clearTargets = async () => {
+	browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+	definedTargetsObj = {};
+	storeDefinedTargets();
+}
+
 let definedTargetsChanged = (changes, areaName) => {
 	if (areaName == "local" && (definedTargetsKey in changes)){
 		if (updateActionButtonState!=undefined) updateActionButtonState();
