@@ -8,6 +8,17 @@ let definedTargetsObj = {};
 let definedTargetsInitialized = false;
 const monitoredTabsIds = new Set();
 
+
+let listenToRequests = async () => {
+	if(!browser.webRequest.onBeforeRequest.hasListener(monitorCallback)){
+		let definedURLs = await getDefinedURLs();
+		let requestFilter = {'urls': definedURLs};
+		browser.webRequest.onBeforeRequest.addListener(monitorCallback, requestFilter);
+	}
+}
+
+let stopListeningToRequests = async () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+
 let initializeDefinedTargets = async () => {
 	let storedTargets = await browser.storage.local.get(definedTargetsKey);
 	if(definedTargetsKey in storedTargets)
@@ -40,7 +51,7 @@ var addTarget = async (URL, localPath) => {
 }
 
 var clearTargets = async () => {
-	browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+	stopListeningToRequests()
 	definedTargetsObj = {};
 	storeDefinedTargets();
 }
@@ -63,11 +74,7 @@ let monitorCallback = async details => {
 
 var monitorTab = async tabId => {
 	addMonitoredTab(tabId);
-	if(!browser.webRequest.onBeforeRequest.hasListener(monitorCallback)){
-		let definedURLs = await getDefinedURLs();
-		let requestFilter = {'urls': definedURLs};
-		browser.webRequest.onBeforeRequest.addListener(monitorCallback, requestFilter);
-	}
+	listenToRequests()
 	text = 'registered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
 	console.log(text);
 	dumpCache=usePopupDump(text+'<br/>');
@@ -75,7 +82,7 @@ var monitorTab = async tabId => {
 
 var unmonitorTab = tabId => {
 	removeMonitoredTab(tabId);
-	if(noMonitoredTabs()) browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+	if(noMonitoredTabs()) stopListeningToRequests()
 	text = 'unregistered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
 	console.log(text);
 	dumpCache=usePopupDump(text+'<br/>');
