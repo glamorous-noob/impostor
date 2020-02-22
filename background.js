@@ -83,7 +83,7 @@ var monitorTab = async tabId => {
 
 var unmonitorTab = tabId => {
 	removeMonitoredTab(tabId);
-	if(noMonitoredTabs()) stopListeningToRequests()
+	if(!monitoredTabsExist()) stopListeningToRequests();
 	text = 'unregistered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
 	console.log(text);
 	dumpCache=usePopupDump(text+'<br/>');
@@ -95,7 +95,7 @@ let addMonitoredTab = tabId =>  monitoredTabsIds.add(tabId);
 
 let removeMonitoredTab = tabId =>  monitoredTabsIds.delete(tabId);
 
-let noMonitoredTabs = () => monitoredTabsIds.size==0;
+let monitoredTabsExist = () => monitoredTabsIds.size!=0;
 
 let tabRemoved = (tabId, removeInfo) => {
 	if(isMonitored(tabId)) unmonitorTab(tabId);
