@@ -43,10 +43,16 @@ let init = async () => {
     
     bg = await browser.runtime.getBackgroundPage();
     bg.refreshOptionsPageData = refreshData;
-    
+
     addTargetButton.addEventListener("click", addTarget);
 
     refreshData();
 }
 
+let cleanForeignReferences = () => {
+    bg.refreshOptionsPageData = undefined;
+    bg = undefined;
+}
+
 document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('unload', cleanForeignReferences);

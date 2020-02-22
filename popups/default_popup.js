@@ -67,4 +67,12 @@ let init = async () => {
 	clearDumpButton.addEventListener('click', clearDump, false);
 }
 
+let cleanForeignReferences = () => {
+	bg.usePopupDump = undefined;
+	bg.updateActionButtonState = undefined;
+	bg = undefined;
+	currentTab = undefined;
+}
+
 document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('unload', cleanForeignReferences);
