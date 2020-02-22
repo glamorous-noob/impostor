@@ -41,17 +41,28 @@ let unmonitorCurrentTab = () => {
 
 let openSettingsPage = async () => browser.runtime.openOptionsPage();
 
+var updateActionButtonState = async () => {
+	if(await bg.definedTargetsExist()) actionButton.disabled = false;
+	else actionButton.disabled = true;
+}
+
 let init = async () => {
 	actionButton = document.getElementById('action');
 	dumpArea = document.getElementById('dump');
 	clearDumpButton = document.getElementById('clear_dump');
 	settingsButton = document.getElementById('settings');
+	currentTab = await browser.tabs.query(currentTabQuery).then(tabs => tabs[0]);
+	
 	bg = await browser.runtime.getBackgroundPage();
 	bg.usePopupDump = dump;
-	currentTab = await browser.tabs.query(currentTabQuery).then(tabs => tabs[0]);
+	bg.updateActionButtonState = updateActionButtonState;
+	
 	if(bg.isMonitored(currentTab.id)) showMonitoredState();
 	else showUnmonitoredState();
+	
 	dump(bg.dumpCache);
+	updateActionButtonState();
+
 	settingsButton.addEventListener('click', openSettingsPage, false);
 	clearDumpButton.addEventListener('click', clearDump, false);
 }

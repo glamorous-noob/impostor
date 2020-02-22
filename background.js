@@ -1,5 +1,6 @@
 'use strict';
 var usePopupDump;
+var updateActionButtonState = undefined;
 var dumpCache = "";
 
 const monitoredTabsIds = new Set();
@@ -9,6 +10,8 @@ var getDefinedTargets = async () => browser.storage.local.get(null);
 var getDefinedURLs = async () => Object.keys(await getDefinedTargets());
 
 var getNumberOfTargets = async () => (await getDefinedURLs()).length;
+
+var definedTargetsExist = async () => (await getDefinedURLs()).length != 0;
 
 var addTarget = async (URL, localPath) => {
 	keyvalue={};
