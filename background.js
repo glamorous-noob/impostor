@@ -48,6 +48,7 @@ let storeDefinedTargets = async () => {
 
 var addTarget = async (URL, localPath) => {
 	definedTargetsObj[URL] = localPath;
+	if(monitoredTabsExist()) listenToRequests();
 	storeDefinedTargets();
 }
 
@@ -75,7 +76,7 @@ let monitorCallback = async details => {
 
 var monitorTab = async tabId => {
 	addMonitoredTab(tabId);
-	listenToRequests()
+	if(definedTargetsExist()) listenToRequests();
 	text = 'registered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
 	console.log(text);
 	dumpCache=usePopupDump(text+'<br/>');
