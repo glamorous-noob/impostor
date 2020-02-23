@@ -7,15 +7,18 @@ let clearTargetsButton;
 let targetsTableBody;
 let bg;
 
+let storeImpostor = (URL,fileObj) => {
+}
+
 // TODO
 let isURLvalid = URL => true;
-let isPathValid = URL => true;
 
 let addTarget = async () =>{
     let URL = URLpatternTag.value;
-    let path = impostorTag.value;
-    if(!(isURLvalid(URL) && isPathValid(path))) return;
-    await bg.addTarget(URL, path);
+    let impostorInfo = impostorTag.files[0].name
+    if(!isURLvalid(URL)) return;
+    storeImpostor(URL, impostorTag.files[0]);
+    await bg.addTarget(URL, impostorInfo);
 }
 
 let clearTargets = async () => bg.clearTargets();
@@ -25,13 +28,13 @@ var refreshData = async () => {
     targetsTableBody.textContent="";
     let targets = await bg.getDefinedTargets();
     for(const URLpattern in targets){
-        let impostorPath = targets[URLpattern];
+        let impostorInfo = targets[URLpattern];
         let tr = document.createElement('tr');
         let td1 = document.createElement('td');
         td1.textContent = URLpattern;
         tr.appendChild(td1);
         let td2 = document.createElement('td');
-        td2.textContent = impostorPath;
+        td2.textContent = impostorInfo;
         tr.appendChild(td2);
         targetsTableBody.appendChild(tr);
     }
@@ -40,7 +43,7 @@ var refreshData = async () => {
 let init = async () => {
     targetCountSpan = document.getElementById("targetCount");
     URLpatternTag = document.getElementById("URLpattern");
-    impostorTag = document.getElementById("ImpostorPath");
+    impostorTag = document.getElementById("Impostor");
     addTargetButton = document.getElementById("addTarget");
     clearTargetsButton = document.getElementById("clearTargets");
     targetsTableBody = document.getElementById("TargetsTable").getElementsByTagName("tbody")[0];

@@ -46,8 +46,8 @@ let storeDefinedTargets = async () => {
 	browser.storage.local.set(storageObj);
 }
 
-var addTarget = async (URL, localPath) => {
-	definedTargetsObj[URL] = localPath;
+var addTarget = async (URL, impostorInfo) => {
+	definedTargetsObj[URL] = impostorInfo;
 	if(monitoredTabsExist()) listenToRequests();
 	storeDefinedTargets();
 }
