@@ -3,6 +3,9 @@ var usePopupDump = undefined;
 var updateActionButtonState = undefined;
 var refreshOptionsPageData = undefined;
 var dumpCache = "";
+let impostorsDBName = "IMPOSTORS";
+let filesObjectStoreName = "IMPOSTORS_FILES";
+let impostorsDBObj = undefined;
 let definedTargetsKey = "DEFINED_TARGETS"
 let definedTargetsObj = {};
 let definedTargetsInitialized = false;
@@ -19,6 +22,24 @@ let listenToRequests = async () => {
 }
 
 let stopListeningToRequests = () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+
+var storeImpostor = (URL,fileBytes) => {
+	let request = window.indexedDB.open(impostorsDBName, 1);
+	request.onupgradeneeded = e => {
+		console.log("Creating database");
+		impostorsDBObj = e.target.result;
+		impostorsDBObj.onerror = e => console.log("such shit");
+		impostorsDBObj.createObjectStore(filesObjectStoreName);
+	}
+	request.onsuccess = e => {
+		impostorsDBObj = e.target.result;
+		impostorsDBObj.onerror = e => console.log("such shit");
+		let transaction = impostorsDBObj.transaction(filesObjectStoreName, "readwrite");
+		let objectStore = transaction.objectStore(filesObjectStoreName);
+		let addRequest = objectStore.add(fileBytes, URL);
+		addRequest.onsuccess = e => console.log("file stored successfully");
+	}
+}
 
 let initializeDefinedTargets = async () => {
 	let storedTargets = await browser.storage.local.get(definedTargetsKey);

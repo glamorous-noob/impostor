@@ -8,6 +8,12 @@ let targetsTableBody;
 let bg;
 
 let storeImpostor = (URL,fileObj) => {
+    let fr = new FileReader();
+    fr.onload = e => {
+        let fileBytes = e.target.result;
+        bg.storeImpostor(URL, fileBytes);
+    }
+    fr.readAsBinaryString(fileObj);
 }
 
 // TODO
