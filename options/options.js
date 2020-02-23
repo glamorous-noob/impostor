@@ -29,19 +29,24 @@ let addTarget = async () =>{
 
 let clearTargets = async () => bg.clearTargets();
 
+let createTableRow = async (URLpattern, impostorInfo) => {
+    let tr = document.createElement('tr');
+    let td1 = document.createElement('td');
+    td1.textContent = URLpattern;
+    tr.appendChild(td1);
+    let td2 = document.createElement('td');
+    td2.textContent = impostorInfo;
+    tr.appendChild(td2);
+    return tr;
+}
+
 var refreshData = async () => {
     targetCountSpan.textContent = await bg.getNumberOfTargets();
     targetsTableBody.textContent="";
     let targets = await bg.getDefinedTargets();
     for(const URLpattern in targets){
         let impostorInfo = targets[URLpattern];
-        let tr = document.createElement('tr');
-        let td1 = document.createElement('td');
-        td1.textContent = URLpattern;
-        tr.appendChild(td1);
-        let td2 = document.createElement('td');
-        td2.textContent = impostorInfo;
-        tr.appendChild(td2);
+        let tr = createTableRow(URLpattern, impostorInfo);
         targetsTableBody.appendChild(tr);
     }
 }
