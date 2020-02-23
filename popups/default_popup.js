@@ -7,12 +7,12 @@ let dumpArea;
 let clearDumpButton;
 let bg;
 
-let dump = function (content) {
+let dump = content => {
 	dumpArea.innerHTML+=content;
 	return dumpArea.innerHTML;
 }
 
-let clearDump = function (){
+let clearDump = () => {
 	dumpArea.innerHTML="";
 	bg.dumpCache="";
 }

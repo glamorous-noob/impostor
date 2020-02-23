@@ -8,8 +8,8 @@ let targetsTableBody;
 let bg;
 
 // TODO
-let isURLvalid = (URL) => true;
-let isPathValid = (URL) => true;
+let isURLvalid = URL => true;
+let isPathValid = URL => true;
 
 let addTarget = async () =>{
     let URL = URLpatternTag.value;
