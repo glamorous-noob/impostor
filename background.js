@@ -80,7 +80,7 @@ let definedTargetsChanged = (changes, areaName) => {
 }
 
 let monitorCallback = async details => {
-	text = details.tabId +" made a request to "+details.url;
+	let text = details.tabId +" made a request to "+details.url;
 	if(isMonitored(details.tabId)) text += '<br/>NOICE :)<br/><br/>'
 	else text += '<br/>5ORDA!!!!!<br/><br/>';
 	console.log(text);
@@ -103,7 +103,7 @@ let stopListeningToRequests = () => browser.webRequest.onBeforeRequest.removeLis
 var monitorTab = async tabId => {
 	addMonitoredTab(tabId);
 	if(definedTargetsExist()) listenToRequests();
-	text = 'registered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
+	let text = 'registered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
 	console.log(text);
 	dumpCache=usePopupDump(text+'<br/>');
 };
@@ -111,7 +111,7 @@ var monitorTab = async tabId => {
 var unmonitorTab = tabId => {
 	removeMonitoredTab(tabId);
 	if(!monitoredTabsExist()) stopListeningToRequests();
-	text = 'unregistered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
+	let text = 'unregistered '+tabId+' : '+JSON.stringify([...monitoredTabsIds]);
 	console.log(text);
 	dumpCache=usePopupDump(text+'<br/>');
 };
