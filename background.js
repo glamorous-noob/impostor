@@ -31,6 +31,8 @@ var storeImpostor = (URL,fileBytes) => {
 		let objectStore = transaction.objectStore(filesObjectStoreName);
 		let addRequest = objectStore.add(fileBytes, URL);
 		addRequest.onsuccess = e => console.log("file stored successfully");
+		impostorsDBObj.close();
+		impostorsDBObj = undefined;
 	}
 }
 
