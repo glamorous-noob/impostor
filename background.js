@@ -11,17 +11,7 @@ let definedTargetsObj = {};
 let definedTargetsInitialized = false;
 const monitoredTabsIds = new Set();
 
-let isListeningToRequests = () => browser.webRequest.onBeforeRequest.hasListener(monitorCallback);
 
-let listenToRequests = async () => {
-	if(!isListeningToRequests()){
-		let definedURLs = await getDefinedURLs();
-		let requestFilter = {'urls': definedURLs};
-		browser.webRequest.onBeforeRequest.addListener(monitorCallback, requestFilter);
-	}
-}
-
-let stopListeningToRequests = () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
 
 var storeImpostor = (URL,fileBytes) => {
 	let request = window.indexedDB.open(impostorsDBName, 1);
@@ -94,6 +84,18 @@ let monitorCallback = async details => {
 	dumpCache = usePopupDump(text+'<br/>');
 	return {};
 }
+
+let isListeningToRequests = () => browser.webRequest.onBeforeRequest.hasListener(monitorCallback);
+
+let listenToRequests = async () => {
+	if(!isListeningToRequests()){
+		let definedURLs = await getDefinedURLs();
+		let requestFilter = {'urls': definedURLs};
+		browser.webRequest.onHeadersReceived.addListener(monitorCallback, requestFilter, ["responseHeaders"]);
+	}
+}
+
+let stopListeningToRequests = () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
 
 var monitorTab = async tabId => {
 	addMonitoredTab(tabId);
