@@ -1,5 +1,5 @@
 'use strict';
-var usePopupDump = undefined;
+var dump = undefined;
 var updateActionButtonState = undefined;
 var refreshOptionsPageData = undefined;
 var dumpCache = "";
@@ -11,7 +11,10 @@ let definedTargetsObj = {};
 let definedTargetsInitialized = false;
 const monitoredTabsIds = new Set();
 
-
+let usePopupDump = text => {
+	if(dump!=undefined) return dump(text);
+	else return dumpCache;
+}
 
 var storeImpostor = (URL,fileBytes) => {
 	let request = window.indexedDB.open(impostorsDBName, 1);

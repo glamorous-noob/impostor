@@ -54,7 +54,7 @@ let init = async () => {
 	currentTab = await browser.tabs.query(currentTabQuery).then(tabs => tabs[0]);
 	
 	bg = await browser.runtime.getBackgroundPage();
-	bg.usePopupDump = dump;
+	bg.dump = dump;
 	bg.updateActionButtonState = updateActionButtonState;
 	
 	if(bg.isMonitored(currentTab.id)) showMonitoredState();
@@ -68,7 +68,7 @@ let init = async () => {
 }
 
 let cleanForeignReferences = () => {
-	bg.usePopupDump = undefined;
+	bg.dump = undefined;
 	bg.updateActionButtonState = undefined;
 	bg = undefined;
 	currentTab = undefined;
