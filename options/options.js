@@ -29,7 +29,7 @@ let addTarget = async () =>{
 
 let clearTargets = async () => bg.clearTargets();
 
-let createTableRow = async (URLpattern, impostorInfo) => {
+let createTableRow = (URLpattern, impostorInfo) => {
     let tr = document.createElement('tr');
     let td1 = document.createElement('td');
     td1.textContent = URLpattern;
