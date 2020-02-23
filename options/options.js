@@ -27,7 +27,10 @@ let addTarget = async () =>{
     await bg.addTarget(URL, impostorInfo);
 }
 
-let clearTargets = async () => bg.clearTargets();
+let clearTargets = async () => {
+    bg.clearFileStorage();
+    bg.clearTargets();
+}
 
 let createTableRow = (URLpattern, impostorInfo) => {
     let tr = document.createElement('tr');

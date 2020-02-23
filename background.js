@@ -36,6 +36,27 @@ var storeImpostor = (URL,fileBytes) => {
 	}
 }
 
+var clearFileStorage = () => {
+	let request = window.indexedDB.open(impostorsDBName, 1);
+	//that would be a reaalllyyy weird situation but let's "safe-code" it
+	request.onupgradeneeded = e => { 
+		console.log("Creating database that I am supposed to wipe...?");
+		impostorsDBObj = e.target.result;
+		impostorsDBObj.onerror = e => console.log("such shit");
+		impostorsDBObj.createObjectStore(filesObjectStoreName);
+	}
+	request.onsuccess = e => {
+		impostorsDBObj = e.target.result;
+		impostorsDBObj.onerror = e => console.log("such shit");
+		let transaction = impostorsDBObj.transaction(filesObjectStoreName, "readwrite");
+		let objectStore = transaction.objectStore(filesObjectStoreName);
+		let clearRequest = objectStore.clear();
+		clearRequest.onsuccess = e => console.log("All files deleted.");
+		impostorsDBObj.close();
+		impostorsDBObj = undefined;
+	}
+}
+
 let initializeDefinedTargets = async () => {
 	let storedTargets = await browser.storage.local.get(definedTargetsKey);
 	if(definedTargetsKey in storedTargets)
