@@ -102,9 +102,19 @@ let definedTargetsChanged = (changes, areaName) => {
 	}
 }
 
+let getContentLength = HTTPheaders => {
+	let clHeaderInd = HTTPheaders.findIndex( 
+		header => header.name.toUpperCase()=="CONTENT-LENGTH"
+	);
+	if(clHeaderInd!=-1) return HTTPheaders[clHeaderInd].value()
+	else return -1;
+}
+
 let monitorCallback = async details => {
 	let text = details.tabId +" made a request to "+details.url;
-	if(isMonitored(details.tabId)) text += '<br/>NOICE :)<br/><br/>'
+	if(isMonitored(details.tabId)) {
+		text +=" "+getContentLength(details.responseHeaders);
+	}
 	else text += '<br/>5ORDA!!!!!<br/><br/>';
 	console.log(text);
 	dumpCache = usePopupDump(text+'<br/>');
