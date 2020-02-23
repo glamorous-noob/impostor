@@ -1,5 +1,5 @@
 'use strict';
-var usePopupDump;
+var usePopupDump = undefined;
 var updateActionButtonState = undefined;
 var refreshOptionsPageData = undefined;
 var dumpCache = "";
