@@ -141,7 +141,7 @@ let monitorCallback = async details => {
 	return {};
 }
 
-let isListeningToRequests = () => browser.webRequest.onBeforeRequest.hasListener(monitorCallback);
+let isListeningToRequests = () => browser.webRequest.onHeadersReceived.hasListener(monitorCallback);
 
 let listenToRequests = async () => {
 	if(!isListeningToRequests()){
@@ -151,7 +151,7 @@ let listenToRequests = async () => {
 	}
 }
 
-let stopListeningToRequests = () => browser.webRequest.onBeforeRequest.removeListener(monitorCallback);
+let stopListeningToRequests = () => browser.webRequest.onHeadersReceived.removeListener(monitorCallback);
 
 var monitorTab = async tabId => {
 	addMonitoredTab(tabId);
