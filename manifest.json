@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Impostor",
-  "description": "This extension is just my playground for now",
+  "description": "Inject your own impostor HTTP resources instead of those delivered by server",
   "version": "0.0",
   "browser_action": {
    "default_title": "Whats abouts",
@@ -12,6 +12,9 @@
   },
   "options_ui": {
     "page": "options/options.html"
+  },
+  "icons": {
+    "48": "icons/icon.jpg"
   },
   "permissions": [
   "tabs",
