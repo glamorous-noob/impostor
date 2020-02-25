@@ -29,7 +29,7 @@ var storeImpostor = (URL,fileBytes) => {
 		impostorsDBObj.onerror = e => console.log("such shit");
 		let transaction = impostorsDBObj.transaction(filesObjectStoreName, "readwrite");
 		let objectStore = transaction.objectStore(filesObjectStoreName);
-		let addRequest = objectStore.add(fileBytes, URL);
+		let addRequest = objectStore.put(fileBytes, URL);
 		addRequest.onsuccess = e => console.log("file stored successfully");
 		impostorsDBObj.close();
 		impostorsDBObj = undefined;
