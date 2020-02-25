@@ -36,6 +36,26 @@ var storeImpostor = (URL,fileBytes) => {
 	}
 }
 
+var readImpostor = URL => {
+	let request = window.indexedDB.open(impostorsDBName, 1);
+	request.onupgradeneeded = e => {
+		console.log("Creating database but that doesn't make any sense");
+		impostorsDBObj = e.target.result;
+		impostorsDBObj.onerror = e => console.log("such mega shit");
+		impostorsDBObj.createObjectStore(filesObjectStoreName);
+	}
+	request.onsuccess = e => {
+		impostorsDBObj = e.target.result;
+		impostorsDBObj.onerror = e => console.log("such ultra shit shit");
+		let transaction = impostorsDBObj.transaction(filesObjectStoreName);
+		let objectStore = transaction.objectStore(filesObjectStoreName);
+		let readRequest = objectStore.get(URL);
+		readRequest.onsuccess = e => console.log("File read;\n"+e.target.result);
+		impostorsDBObj.close();
+		impostorsDBObj = undefined;
+	}
+}
+
 var clearFileStorage = () => {
 	let request = window.indexedDB.open(impostorsDBName, 1);
 	//that would be a reaalllyyy weird situation but let's "safe-code" it
