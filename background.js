@@ -36,7 +36,7 @@ var storeImpostor = (URL,fileBytes) => {
 	}
 }
 
-var readImpostor = URL => {
+var readImpostor = (URL,callback) => {
 	let request = window.indexedDB.open(impostorsDBName, 1);
 	request.onupgradeneeded = e => {
 		console.log("Creating database but that doesn't make any sense");
@@ -50,7 +50,7 @@ var readImpostor = URL => {
 		let transaction = impostorsDBObj.transaction(filesObjectStoreName);
 		let objectStore = transaction.objectStore(filesObjectStoreName);
 		let readRequest = objectStore.get(URL);
-		readRequest.onsuccess = e => console.log("File read;\n"+e.target.result);
+		readRequest.onsuccess = e => callback(e.target.result);
 		impostorsDBObj.close();
 		impostorsDBObj = undefined;
 	}
@@ -130,15 +130,24 @@ let getContentLength = HTTPheaders => {
 	else return -1;
 }
 
+let responseBodyReplacerFactory = URL => e => {
+	readImpostor(URL, impostorContent =>{
+	e.target.write((new TextEncoder()).encode(impostorContent));
+	e.target.close();
+	});
+}
+
 let monitorCallback = async details => {
 	let text = details.tabId +" made a request to "+details.url;
 	if(isMonitored(details.tabId)) {
 		text +=" "+getContentLength(details.responseHeaders);
+		let streamFilter = browser.webRequest.filterResponseData(details.requestId);
+		streamFilter.onstart = responseBodyReplacerFactory(details.url);
 	}
 	else text += '<br/>5ORDA!!!!!<br/><br/>';
 	console.log(text);
 	dumpCache = usePopupDump(text+'<br/>');
-	return {};
+	return { 'responseHeaders' : details.responseHeaders};
 }
 
 let isListeningToRequests = () => browser.webRequest.onHeadersReceived.hasListener(monitorCallback);
@@ -147,7 +156,7 @@ let listenToRequests = async () => {
 	if(!isListeningToRequests()){
 		let definedURLs = await getDefinedURLs();
 		let requestFilter = {'urls': definedURLs};
-		browser.webRequest.onHeadersReceived.addListener(monitorCallback, requestFilter, ["responseHeaders"]);
+		browser.webRequest.onHeadersReceived.addListener(monitorCallback, requestFilter, ["responseHeaders", "blocking"]);
 	}
 }
 
