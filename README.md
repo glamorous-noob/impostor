@@ -2,7 +2,7 @@
 
 ## A Firefox extension to replace an HTTP response's body by a local file
 
-![icon](./icons/icon.png)
+<img src="./icons/icon.png" alt="icon" style="zoom: 25%;" />
 
 -----------
 
@@ -25,6 +25,8 @@
 [How to install](#how-to-install)
 
 [Who designed the kickass logo](#who-designed-the-kickass-logo)
+
+[Want to help?](#want-to-help)
 
 ------
 
@@ -92,3 +94,7 @@ I am not sure if it's worth it to sign the extension and maintain it on the offi
 ### Who designed the kickass logo
 
 Good friend [@Khadrawi](https://github.com/Khadrawi) ♥ 
+
+### Want to help?
+
+Issues are welcome. PRs are welcome too as long as they have been tested and are in a stable state that runs without errors. PRs that introduce 464116878617 dependencies to the project are much less welcome :(
