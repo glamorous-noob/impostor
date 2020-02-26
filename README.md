@@ -1,6 +1,6 @@
 # Impostor
 
-## A Firefox extension to replace an HTTP response's body by a local file
+## A Firefox extension to replace an HTTP response's body with a local file
 
 <img src="./icons/icon.png" alt="icon" style="zoom: 25%;" />
 
