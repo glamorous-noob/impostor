@@ -143,10 +143,9 @@ let monitorCallback = async details => {
 		text +=" "+getContentLength(details.responseHeaders);
 		let streamFilter = browser.webRequest.filterResponseData(details.requestId);
 		streamFilter.onstart = responseBodyReplacerFactory(details.url);
+		console.log(text);
+		dumpCache = usePopupDump(text+'<br/>');
 	}
-	else text += '<br/>5ORDA!!!!!<br/><br/>';
-	console.log(text);
-	dumpCache = usePopupDump(text+'<br/>');
 	return { 'responseHeaders' : details.responseHeaders};
 }
 
