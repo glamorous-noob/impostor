@@ -4,6 +4,30 @@
 
 ![icon](.\icons\icon.png)
 
+-----------
+
+### Contents
+
+[What it does](#what-it-does)
+
+[Main use case](#main-use-case)
+
+[Other use cases](#other-use-cases)
+
+[Test environment](#test-environment)
+
+[What it does at the moment](#what-it-does-at-the-moment)
+
+[Current limitations](#current-limitations)
+
+[To do:](#to-do)
+
+[How to install](#how-to-install)
+
+[Who designed the kickass logo](#who-designed-the-kickass-logo)
+
+------
+
 
 
 ### What it does
@@ -24,6 +48,14 @@ Here's what you could do though:
 - Use Impostor to make your browser load ***your modified version of this file*** whenever a request is made to it
 - Reload the page that has the script
 - Debug it in the native devtools debugger like a boss
+
+### Other use cases
+
+Correct a js bug, custom style a website with custom css, etc.
+
+### Test environment
+
+Firefox 73.0.1 - Windows 10
 
 ### What it does at the moment
 
@@ -56,3 +88,7 @@ It does not modify headers.
 For now, this extension is not signed and it is not available in any extension / add-on store. You can use it in Firefox though by cloning this repo and [adding it as a temporary extension](https://blog.mozilla.org/addons/2015/12/23/loading-temporary-add-ons/).
 
 I am not sure if it's worth it to sign the extension and maintain it on the official store.
+
+### Who designed the kickass logo
+
+Good friend [@Khadrawi](https://github.com/Khadrawi) ♥ 
