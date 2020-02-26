@@ -2,7 +2,7 @@
 
 ## A Firefox extension to replace an HTTP response's body by a local file
 
-![icon](.\icons\icon.png)
+![icon](./icons/icon.png)
 
 -----------
 
