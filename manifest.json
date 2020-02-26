@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
   "name": "Impostor",
-  "description": "Inject your own impostor HTTP resources instead of those delivered by server",
+  "description": "Inject your own impostor HTTP resources instead of those delivered by the server",
   "version": "0.0",
   "browser_action": {
-   "default_title": "Whats abouts",
+   "default_title": "Impostor",
    "default_popup": "popups/default_popup.html"
   },
   "background": {
@@ -14,7 +14,7 @@
     "page": "options/options.html"
   },
   "icons": {
-    "48": "icons/icon.jpg"
+    "48": "icons/icon.png"
   },
   "permissions": [
   "tabs",
