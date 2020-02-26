@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Impostor",
-  "description": "Inject your own impostor HTTP resources instead of those delivered by the server",
+  "description": "Inject your own files instead of a server's HTTP response",
   "version": "0.0",
   "browser_action": {
    "default_title": "Impostor",
