@@ -110,7 +110,7 @@ var addTarget = async (URL, impostorInfo) => {
 }
 
 var clearTargets = async () => {
-	stopListeningToRequests()
+	stopListeningToRequests();
 	definedTargetsObj = {};
 	storeDefinedTargets();
 }
@@ -126,7 +126,7 @@ let getContentLength = HTTPheaders => {
 	let clHeaderInd = HTTPheaders.findIndex( 
 		header => header.name.toUpperCase()=="CONTENT-LENGTH"
 	);
-	if(clHeaderInd!=-1) return HTTPheaders[clHeaderInd].value()
+	if(clHeaderInd!=-1) return HTTPheaders[clHeaderInd].value;
 	else return -1;
 }
 
